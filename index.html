@@ -120,10 +120,30 @@
         <section id="login" class="screen">
             <div class="card" style="max-width: 500px; margin: 0 auto;">
                 <h2>Welcome Back</h2>
-                <div class="input-group"><label>Email</label><input type="email" id="logEmail"></div>
-                <div class="input-group"><label>Password</label><input type="password" id="logPass"></div>
-                <div class="input-group"><label>Vehicle Number</label><input type="text" id="logVehicle" placeholder="GJ-01-1234"></div>
-                <button class="btn btn-primary" style="width:100%" onclick="handleLogin()">Login</button>
+               <div class="input-group">
+    <label>Email</label>
+    <input type="email" id="logEmail">
+</div>
+
+<div class="input-group">
+    <label>Password</label>
+    <input type="password" id="logPass">
+
+    <div style="text-align:right; margin-top:8px;">
+        <a href="#" onclick="forgotPassword()" style="text-decoration:none; color:#0984e3;">
+            Forgot Password?
+        </a>
+    </div>
+</div>
+
+<div class="input-group">
+    <label>Vehicle Number</label>
+    <input type="text" id="logVehicle" placeholder="GJ-01-1234">
+</div>
+
+<button class="btn btn-primary" style="width:100%" onclick="handleLogin()">
+    Login
+</button>
             </div>
         </section>
 
@@ -308,6 +328,31 @@
             document.getElementById('feedbackList').innerHTML = entry + document.getElementById('feedbackList').innerHTML;
             alert("Thank you!");
         };
+
+
+
+        window.forgotPassword = async () => {
+
+    const email = document.getElementById("logEmail").value.trim();
+
+    if (!email) {
+        alert("Please enter your email address first.");
+        return;
+    }
+
+    try {
+
+        await auth.sendPasswordResetEmail(email);
+
+        alert("Password reset email has been sent.\nPlease check your inbox.");
+
+    } catch (error) {
+
+        alert(error.message);
+
+    }
+
+};
 
         window.logout = () => {
             auth.signOut();
